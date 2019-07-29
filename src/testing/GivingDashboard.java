@@ -7,31 +7,42 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import config.PropertiesFile;
+
 public class GivingDashboard {
 
-	static String browser;
+	public static String browser;
 	static WebDriver driver;
 	static String  projectLocation;
 	public static void main(String[] args) throws InterruptedException {
 //		testGoogleSearch();
 		projectLocation = System.getProperty("user.dir");
-		setBrowser();
+//		setBrowser();
+		PropertiesFile.readPropertiesFile();
 		setBrowserConfig();
 		runTest();
+		PropertiesFile.writePropertiesFile();
 	}
 
 	public static void setBrowser() {
 		browser = "chrome";
 	}
 
+	/**
+	 * Description
+	 * @author Sasikumar Ganesan
+	 * @date
+	 */
 	public static void setBrowserConfig() {
 		
+		// this condition block sets config for firefox browser
 		if(browser.contains("firefox")) {
 			System.setProperty("webdriver.gecko.driver", projectLocation + "\\lib\\geckodriver\\geckodriver.exe");
 			System.setProperty("webdriver.firefox.bin", "C:\\Program Files\\Mozilla Firefox\\firefox.exe");
 			driver = new FirefoxDriver();
 		} 
 		
+		// this condition block sets config for chrome browser
 		if(browser.contains("chrome")) {
 			System.setProperty("webdriver.chrome.driver", projectLocation + "\\lib\\chromedriver\\chromedriver.exe");
 			driver = new ChromeDriver();
